@@ -8,6 +8,7 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
+
 MODEL_PATH = "model.joblib"   # where the notebook saves the model (yes, hard-coded on purpose)
 FEATURES = ["tenure_months", "monthly_charges", "contract", "internet_service", "support_calls"]
 class Customer(BaseModel):
