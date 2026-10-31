@@ -31,7 +31,7 @@ jobs:
           tags: ai381-lab2:scan
 
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.33.1
         with:
           image-ref: ai381-lab2:scan
           format: table
