@@ -1,9 +1,12 @@
-FROM python:3.14-slim@sha256:cd89c30eda26ee911a4611b18680086e0ea42e6f5f8cbe653d07fa7958c9cec8 AS builder
+FROM python:3.14-slim AS builder
 WORKDIR /app
 COPY requirements.txt .
 RUN python -m pip install --no-cache-dir --upgrade pip setuptools
 RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
-FROM python:3.14-slim@sha256:cd89c30eda26ee911a4611b18680086e0ea42e6f5f8cbe653d07fa7958c9cec8 AS runtime
+FROM python:3.14-slim AS runtime
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --only-upgrade zlib1g \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY src/ ./src/
