@@ -10,7 +10,8 @@ RUN apt-get update \
 WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY src/ ./src/
-COPY model.joblib .
+COPY artifacts/model.joblib ./model.joblib
+COPY artifacts/metadata.json ./metadata.json
 RUN useradd --create-home --shell /usr/sbin/nologin appuser
 RUN python -m pip uninstall -y pip
 USER appuser

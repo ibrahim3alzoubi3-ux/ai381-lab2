@@ -51,6 +51,23 @@ jobs:
       - name: Promotion gate (exit code 1 = blocked)
         run: python scripts/promote.py --champion-file "$RUNNER_TEMP/champion.json"
 
+
+      - name: Build champion Docker image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker build \
+            --build-arg GIT_SHA="${GITHUB_SHA}" \
+            -t churn-api:local .
+
+      - name: Start champion API
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: docker compose -f docker-compose.deploy.yml up -d --wait
+
+      - name: Smoke test champion API
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: bash scripts/smoke_test.sh http://localhost:8000
+
+
       - name: Summary
         if: always()
         run: |
