@@ -4,12 +4,14 @@ Run it by hand (this is Round 1 of the race):
     uvicorn app.main:app --port 8000
 Then send predictions with curl (see sample_request.json).
 """
+import json
+from pathlib import Path
+
 import joblib
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-import json
-from pathlib import Path
+
 MODEL_PATH = "model.joblib"   # where the notebook saves the model (yes, hard-coded on purpose)
 FEATURES = ["tenure_months", "monthly_charges", "contract", "internet_service", "support_calls"]
 class Customer(BaseModel):
