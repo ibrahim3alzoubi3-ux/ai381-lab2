@@ -8,3 +8,19 @@ __pycache__/
 !.env.example
 .vscode/
 /app/
+
+# MLflow local files
+mlruns/
+mlartifacts/
+mlflow.db
+
+# Generated model artifacts
+artifacts/*
+!artifacts/champion.json
+
+# Local reports
+trivy-fixed.json
+trivy-report.json
+
+# Ruff cache
+.ruff_cache/
